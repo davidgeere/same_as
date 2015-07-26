@@ -33,6 +33,14 @@ same_as?(other)
 @chirstopher.same_as? @christina # 50% because we comparing between two options
 ```
 
+**Example 3:**
+```
+@christopher = Person.new(fname: "Chris", lname: "Smith")
+@christina = Person.new(fname: "Chris", lname: "Richards")
+
+@chirstopher.same_as_part? fname: "Chris" # 100% because we comparing only variables name fname on @christopher
+```
+
 ####String
 
 ```
@@ -64,7 +72,7 @@ same_as?(other, max=nil)
 ```
 2015.same_as? 2010, 10 #50%
 ```
-* What example #3 is doing is it is limiting the range of the dates. So instead of comparing since the year 0 we are comparing within the last 10 years. 
+* What example #3 is doing is it is limiting the range of the dates. So instead of comparing since the year 0 we are comparing within the last 10 years.
 
 ####Boolean
 
