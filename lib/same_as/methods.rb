@@ -17,17 +17,54 @@ module SameAs
 
     percentages = []
 
-    puts target
-
     fields.each do |key, value|
-
-      current = target.send("#{key}")
-      percentages << compare_object(current, value)
-
+      case key
+      when :or
+        percentages << compare_fields_or(target, value)
+      when :and
+        percentages << compare_fields(target, value)
+      else
+        current = target.send("#{key}")
+        percentages << compare_fields_value(current, value)
+      end
     end
 
     percentages.inject(0, :+) / percentages.length
 
+  end
+
+  def compare_fields_or(target, **fields)
+
+    percentage = 0.0
+
+    fields.each do |key, value|
+
+      current = target.send("#{key}")
+      matched = compare_fields_value(current, value)
+
+      percentage = matched if matched > percentage
+    end
+
+    percentage
+
+  end
+
+  def compare_fields_value(current, value)
+
+    percentage = 0.0
+
+    if value.is_a? Array
+      matched = 0.0
+      value.each do |option|
+        matched = compare_object(current, option)
+
+        percentage = matched if matched > percentage
+      end
+    else
+      percentage = compare_object(current, value)
+    end
+
+    percentage
   end
 
   def compare_object(target, compared, **args)
