@@ -15,7 +15,8 @@ same_as?(other)
 @christopher = Person.new(name: "Chris", gender: "Male")
 @christina = Person.new(name: "Chris", gender: "Female")
 
-@chirstopher.same_as? @christina # 83.33% because we comparing the gender words
+@chirstopher.same_as? @christina
+# 83.33% because we comparing the gender words
 ```
 
 **Example 2:**
@@ -23,7 +24,8 @@ same_as?(other)
 @christopher = Person.new(name: "Chris", is_female: false)
 @christina = Person.new(name: "Chris", is_female: true)
 
-@chirstopher.same_as? @christina # 50% because we comparing booleans for gender
+@chirstopher.same_as? @christina
+# 50% because we comparing booleans for gender
 ```
 
 **Example 3:**
@@ -31,30 +33,37 @@ same_as?(other)
 @christopher = Person.new(name: "Chris", gender: 0)
 @christina = Person.new(name: "Chris", gender: 1)
 
-@chirstopher.same_as? @christina # 50% because we comparing between two options
+@chirstopher.same_as? @christina
+# 50% because we comparing between two options
 ```
 #####same_as_part
 This method is actually the reason why this gem was created. We wanted to be able to compare parts of things. Example #1 is the simplest we are just seeing if this person is a "Chris" and ignoring their last name.
+
 **Example 1:**
 ```ruby
 @christopher = Person.new(fname: "Chris", lname: "Smith")
 @christina = Person.new(fname: "Chris", lname: "Richards")
 
-@chirstopher.same_as_part? fname: "Chris" # 100% because we comparing only variables name fname on @christopher
+@chirstopher.same_as_part? fname: "Chris"
+# 100% because we comparing only variables name fname on @christopher
 ```
 However in example #2 we know a persons possible names and definite last name but we aren't sure which of them is the first name, so we try them all and the closest match wins.
+
 **Example 2:**
 ```ruby
 @person = Person.new("William", "Henry", "Bill", "Gates")
 @person.same_as_part? fname: ["Will", "Bill", "William", "Henry"], lname: "Gates"
 # 100% because inside of the fname options we found a 100% match to it and also a 100% match to the last name.
 ```
+
 **Example 2.1:**
 ```ruby
 @person.same_as_part? fname: ["Will", "Bill", "Henry"], lname: "Gates"
 # 78.5% because the closest we got was Will (57%) and the last name is a full match
 ```
+
 There comes a time when you want to compare the same value to multiple fields in this case we have a name but we aren't sure what kind of name it is. Is it the first, middle or nickname? So we created an "Or" grouping you can use.
+
 **Example 3:**
 ```ruby
 @person.same_as_part? or: {fname: "Bill", mname: "Bill", nname: "Bill"}, lname: "Gates"
